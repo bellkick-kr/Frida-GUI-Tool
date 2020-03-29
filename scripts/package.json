@@ -1,0 +1,17 @@
+{
+  "name": "hooking_scripts",
+  "version": "1.0.0",
+  "description": "FRIDA hooking scripts directory.",
+  "private": true,
+  "main": "agent/index.ts",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "frida-compile agent/index.ts -o _agent.js",
+    "watch": "frida-compile agent/index.ts -o _agent.js -w"
+  },
+  "devDependencies": {
+    "@types/frida-gum": "^13.0.0",
+    "@types/node": "^12.12.32",
+    "frida-compile": "^9.3.0"
+  }
+}

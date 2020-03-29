@@ -1,0 +1,8 @@
+###
+# pip install -r requirements.txt
+# pip install --upgrade -r requirements.txt
+###
+frida
+frida-tools
+PyQt5
+pyqt5-tools
