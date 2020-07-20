@@ -111,7 +111,12 @@ class AnalysisControl:
 
             # Set APP Directory
             if self.device.os_info == 'iOS':   # iOS
-                self.app_location = '/var/mobile/Containers/Data/Application/%' % self.package
+                for m in memories:
+                    if ('file' in m) and ('/Application/' in m['file']['path']):
+                        self.app_location = m['file']['path'] + ' | but, it\'s not data path. just app path.'
+                        break
+                else:
+                    self.app_location = 'Sorry, I don\'t know. Find it by typing "find" command on console.'
             elif self.device.os_info == 'Windows': # Windows
                 self.app_location = self.package
             else:   # Android
