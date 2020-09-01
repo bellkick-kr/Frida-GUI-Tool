@@ -79,16 +79,16 @@ class HookDevice(QThread):
             if self.options['SpawnGatingCheck'] and self.options['ChildGatingCheck']:
                 self.updatelog(0, '<div style="color: red">&nbsp;| Caution: If Spawn_Gating and Child_Gating options are set together,<br>&nbsp;| Caution: it would be occured some error.</div>')
 
-            resume = True
             if self.pid == 0:  # APP 이 실행 중이지 않은 경우
                 # print("✔ spawn(argv=%s)" % self.package)
                 self.updatelog(0, "✔ spawn(argv=%s)" % self.package)
                 self.pid = self._device.spawn(self.package)
+                self._instrument(self.pid, True)
             else:
+                self.add_tab.emit(self.pid)  # Tab 생성
                 self.updatelog(self.pid, "X spawn(argv=%s): Already running the target app." % self.package)
-                resume = False
+                self._instrument(self.pid, False)
 
-            self._instrument(self.pid, resume)
         except Exception:
             self.error = True
             self.updatelog(0, '<div style="color: red; font-weight: bold">&nbsp;| Error occured: If your target is a Windows Application, this tool need to be runned as administrator.</div>')
@@ -98,8 +98,9 @@ class HookDevice(QThread):
     def _instrument(self, pid, resume):
         # pid = proc.pid
         try:
-            ''' New Tab 생성 '''
-            self.add_tab.emit(pid)
+            ''' New Tab 생성(gating 또는 spawn 시에만, attach는 바로 앞에서 이미 함) '''
+            if resume:
+                self.add_tab.emit(pid)
 
             ''' Frida Attaches to APP '''
             self.session[pid] = self._device.attach(pid)
@@ -126,7 +127,7 @@ class HookDevice(QThread):
                 self.updatelog(pid, "✔ resume(pid=%d): I will run the APP" % pid)
                 self._device.resume(pid)
             else:
-                self.updatelog("X resume(pid=%d): Already running, trying to Attach" % pid)
+                self.updatelog(pid, "X resume(pid=%d): Already running, trying to Attach" % pid)
             # self._sessions.add(session)
         except Exception:
             self.error = True

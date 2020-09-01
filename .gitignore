@@ -1,3 +1,4 @@
-node_modules
 /venv/
 /.idea/
+/scripts/typescript/*
+/scripts/python/*

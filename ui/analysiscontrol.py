@@ -209,7 +209,7 @@ class AnalysisControl:
         if pid in self.script_log:
             self.script_log[pid].append(message)
         else:
-            self.script_log[0].append('<div style="color: red; font-weight: bold">&nbsp;| Error Occured: PID %d doesn\'t existed.<br>&nbsp;| Error Occured: It would be removed befroe attached.</div>' % pid)
+            self.script_log[0].append('<div style="color: red; font-weight: bold">&nbsp;| Error Occured: PID %d doesn\'t existed.<br>&nbsp;| Error Occured: It would be removed before attached.</div>' % pid)
         QApplication.processEvents()
 
     def print_information(self, conf=None):
