@@ -128,7 +128,7 @@ class AnalysisOptionDialog(QDialog):
             self.SelectedScript.insertRow(i)
             self.SelectedScript.setItem(i, 0, QTableWidgetItem(saved_script[0]))
             chk_bx = QCheckBox()
-            chk_bx.setCheckState(True if saved_script[1] == 'checked' else False)
+            chk_bx.setChecked(True if saved_script[1] == 'checked' else False)
             chk_bx.setStyleSheet("margin-left:23;")
             self.SelectedScript.setCellWidget(i, 1, chk_bx)
             self.SelectedScript.setItem(i, 2, QTableWidgetItem(saved_script[2]))
@@ -136,8 +136,8 @@ class AnalysisOptionDialog(QDialog):
             self.SelectedScript.setItem(i, 4, QTableWidgetItem(saved_script[4]))
             self.SelectedScript.setItem(i, 5, QTableWidgetItem(saved_script[5]))
 
-        self.SpawnGatingCheck.setCheckState(True if self.conf['Gating']['Spawn_Gating'] == 'on' else False)
-        self.ChildGatingCheck.setCheckState(True if self.conf['Gating']['Child_Gating'] == 'on' else False)
+        self.SpawnGatingCheck.setChecked(True if self.conf['Gating']['Spawn_Gating'] == 'on' else False)
+        self.ChildGatingCheck.setChecked(True if self.conf['Gating']['Child_Gating'] == 'on' else False)
 
     def print_script_list(self, index):
         path = self.dirModel.fileInfo(index).absoluteFilePath()
